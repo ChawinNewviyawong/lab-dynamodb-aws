@@ -1,0 +1,38 @@
+Tutorial Prerequisites
+
+1. get aws access key (used to dynamoDB)
+  to get the access key and secret access key foe an IAM user
+  - go to IAM console and choose Users.
+  - choose Add user.
+  - add User in User name box.
+  - go to Select AWS access type.
+  - check box Programmatic access.
+  - choose next.
+  - go to Set Permission, choose Attach existing policies directly.
+  - search dynamodb, choose AmazonDynamoDBFullAccess.
+  - and choose Add User.
+  - to see the new access key, choose Show. Your credentials will look something like this:
+      Access key ID: AKIAIOSFODNN7EXAMPLE
+      Secret access key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+2. set aws configure
+  set access key and secret access key in aws configure
+  - open terminal.
+  - $ aws configure.
+
+    enter access key into AWS Access Key ID [None]:
+    enter secret access key into AWS Secret Access Key [None]:
+    enter your region into Default region name [None]:
+    enter format type into Default output format [None]:
+
+    example:
+    AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+    AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    Default region name [None]: us-east-2
+    Default output format [None]: json
+
+  note:
+  output format is results are formatted. json is used as the default. The value can be any of the values in the following list:
+    json: output is formatted as a JSON string.
+    text: output is formatted as multiple lines of tab-separated string values.
+    table: output is formatted as a table.
