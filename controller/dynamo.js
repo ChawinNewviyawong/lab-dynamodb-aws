@@ -162,7 +162,7 @@ function deleteData(tableName, year, titleName) {
     console.log("Attempting a conditional delete...");
     return new Promise((resolve, reject) => {
 
-        docClient.delete(params, function(err, data) {
+        docClient.delete(params, function (err, data) {
             if (err) {
                 console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
                 reject({ message: err });
@@ -174,10 +174,53 @@ function deleteData(tableName, year, titleName) {
     });
 }
 
+function queryByYear(tableName, year) {
+    updateAWSConfig();
+
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+    var params = {
+        TableName: tableName,
+        KeyConditionExpression: "#yr = :yyyy",
+        ExpressionAttributeNames: {
+            "#yr": "year"
+        },
+        ExpressionAttributeValues: {
+            ":yyyy": year
+        }
+    }
+
+    return new Promise((resolve, reject) => {
+
+        docClient.query(params, function (err, data) {
+            if (err) {
+                console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+                reject({ message: err });
+            } else {
+                console.log("Query succeeded.");
+                
+                var items = [];
+                data.Items.forEach(function (item) {
+                    console.log(" -", item.year + ": " + item.title);
+                    var data = `${item.year} : ${item.title}`;
+                    items.push(data);
+                });
+                var result = {
+                    Items: items
+                }
+                resolve({ message: result });
+            }
+        });
+
+    });
+
+}
+
 module.exports = {
     createTable,
     insertData,
     readData,
     updateData,
-    deleteData
+    deleteData,
+    queryByYear
 };

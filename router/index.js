@@ -84,4 +84,21 @@ app.post('/deleteData', (req, res, next) => {
 
 });
 
+app.post('/queryByYear', (req, res, next) => {
+
+    dynamo.queryByYear(req.body.tableName, req.body.year).then((result) => {
+        res.status(201);
+        res.json(result.message);
+    })
+        .catch((error) => {
+            console.error(`Unable to query. Error: ${error} `);
+            res.status(500);
+            res.json({
+                code: 500,
+                message: `Unable to query. Error: ${error}`
+            });
+        });
+
+});
+
 module.exports = app;
